@@ -251,8 +251,11 @@ setopt hist_no_store
 autoload predict-on && predict-on
 zle -N predict-on
 zle -N predict-off
-bindkey 'xp' predict-on # ctrl + xp で予測ON
-bindkey 'xp' predict-off # ctrl + X ctrl + p で予測OFF
+bindkey 'X' predict-on # ctrl + xで予測ON
+bindkey 'Z' predict-off # ctrl + zで予測OFF
+# 予測入力のONとOFFを表示
+zstyle ':predict' verbose true
+zstyle ':predict' toggle true
 
 ##=================================================================
 ## ls 
@@ -272,6 +275,11 @@ function cdup() {
 }
 zle -N cdup
 bindkey '^' cdup
+
+##=================================================================
+## cdで移動したらlsする 
+##=================================================================
+function chpwd() { ls -F }
 
 ##=================================================================
 ## 最後にもし自分専用のファイルがあればそいつを読み込む 
