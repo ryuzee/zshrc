@@ -38,6 +38,7 @@ alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
+alias ga="for f in `ls -1`\n do\n echo $f\n done"
 
 ##=================================================================
 ## RVMの設定 
@@ -248,14 +249,11 @@ setopt hist_no_store
 ##=================================================================
 ## 先読みしてコマンドラインを補完する
 ##=================================================================
-autoload predict-on && predict-on
-zle -N predict-on
-zle -N predict-off
-bindkey 'X' predict-on # ctrl + xで予測ON
-bindkey 'Z' predict-off # ctrl + zで予測OFF
-# 予測入力のONとOFFを表示
-zstyle ':predict' verbose true
-zstyle ':predict' toggle true
+#autoload predict-on && predict-on
+#zle -N predict-on
+#zle -N predict-off
+#bindkey 'X' predict-on # ctrl + xで予測ON
+#bindkey 'Z' predict-off # ctrl + zで予測OFF
 
 ##=================================================================
 ## ls 
@@ -264,17 +262,6 @@ alias ls='ls -G'
 export LSCOLORS=gxfxcxdxbxegedabagacad
 ### "": 空文字列はデフォルト値を使うという意味。
 zstyle ':completion:*:default' list-colors ""
-
-##=================================================================
-## ^を押すとどんどん上の階層に移動する 
-##=================================================================
-function cdup() {
-   echo
-   cd ..
-   zle reset-prompt
-}
-zle -N cdup
-bindkey '^' cdup
 
 ##=================================================================
 ## cdで移動したらlsする 
