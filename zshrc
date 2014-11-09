@@ -292,3 +292,13 @@ RPROMPT="%1(v|%F{green}%1v%f|)"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH=/usr/local/bin:$PATH
+
+##=================================================================
+## ディレクトリの移動履歴を残してcdrコマンドで一覧表示したり移動できるようにする
+##=================================================================
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+
+# added by travis gem
+[ -f /Users/ryutaroy/.travis/travis.sh ] && source /Users/ryutaroy/.travis/travis.sh
