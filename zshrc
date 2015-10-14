@@ -30,7 +30,7 @@ export SVN_EDITOR="vi -u NONE"
 export EDITOR="vi -u NONE"
 
 ##=================================================================
-## my alias 
+## my alias
 ##=================================================================
 alias la="ls -a"
 alias lf="ls -F"
@@ -40,9 +40,10 @@ alias df="df -h"
 alias su="su -l"
 
 ##=================================================================
-## RVMの設定 
+## rbenvの設定
 ##=================================================================
-source $HOME/.rvm/scripts/rvm
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
 
 ##=================================================================
 ## grepの設定
@@ -214,14 +215,14 @@ case ${UID} in
     PROMPT="%B%{[31m%}%/#%{[m%}%b "
     PROMPT2="%B%{[31m%}%_#%{[m%}%b "
     SPROMPT="%B%{[31m%}%r is correct? [n,y,a,e]:%{[m%}%b "
-    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
     ;;
 *)
     PROMPT="%{[34m%}%/%%%{[m%} "
     PROMPT2="%{[34m%}%_%%%{[m%} "
     SPROMPT="%{[34m%}%r is correct? [n,y,a,e]:%{[m%} "
-    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && 
+    [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
         PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
     ;;
 esac
@@ -248,17 +249,17 @@ setopt hist_no_store
 ##=================================================================
 ## 先読みしてコマンドラインを補完する
 ##=================================================================
-autoload predict-on && predict-on
-zle -N predict-on
-zle -N predict-off
-bindkey 'X' predict-on # ctrl + xで予測ON
-bindkey 'Z' predict-off # ctrl + zで予測OFF
-# 予測入力のONとOFFを表示
-zstyle ':predict' verbose true
-zstyle ':predict' toggle true
+##autoload predict-on && predict-on
+##zle -N predict-on
+##zle -N predict-off
+##bindkey 'X' predict-on # ctrl + xで予測ON
+##bindkey 'Z' predict-off # ctrl + zで予測OFF
+### 予測入力のONとOFFを表示
+##zstyle ':predict' verbose true
+##zstyle ':predict' toggle true
 
 ##=================================================================
-## ls 
+## ls
 ##=================================================================
 alias ls='ls -G'
 export LSCOLORS=gxfxcxdxbxegedabagacad
@@ -266,7 +267,7 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 zstyle ':completion:*:default' list-colors ""
 
 ##=================================================================
-## ^を押すとどんどん上の階層に移動する 
+## ^を押すとどんどん上の階層に移動する
 ##=================================================================
 function cdup() {
    echo
@@ -277,11 +278,11 @@ zle -N cdup
 bindkey '^' cdup
 
 ##=================================================================
-## cdで移動したらlsする 
+## cdで移動したらlsする
 ##=================================================================
 function chpwd() { ls -F }
 
 ##=================================================================
-## 最後にもし自分専用のファイルがあればそいつを読み込む 
+## 最後にもし自分専用のファイルがあればそいつを読み込む
 ##=================================================================
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
