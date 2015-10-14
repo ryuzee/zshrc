@@ -38,6 +38,7 @@ alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
+alias ga="for f in `ls -1`\n do\n echo $f\n done"
 
 ##=================================================================
 ## rbenvの設定
@@ -282,7 +283,37 @@ bindkey '^' cdup
 ##=================================================================
 function chpwd() { ls -F }
 
+# VCSの情報を取得するzshの便利関数 vcs_infoを使う
+autoload -Uz vcs_info
+
+# 表示フォーマットの指定
+# %b ブランチ情報
+# %a アクション名(mergeなど)
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+# バージョン管理されているディレクトリにいれば表示，そうでなければ非表示
+RPROMPT="%1(v|%F{green}%1v%f|)"
+
 ##=================================================================
 ## 最後にもし自分専用のファイルがあればそいつを読み込む
 ##=================================================================
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=/usr/local/bin:$PATH
+
+##=================================================================
+## ディレクトリの移動履歴を残してcdrコマンドで一覧表示したり移動できるようにする
+##=================================================================
+autoload -Uz add-zsh-hook
+autoload -Uz chpwd_recent_dirs cdr
+add-zsh-hook chpwd chpwd_recent_dirs
+
+# added by travis gem
+[ -f /Users/ryutaroy/.travis/travis.sh ] && source /Users/ryutaroy/.travis/travis.sh
