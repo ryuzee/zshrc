@@ -39,6 +39,10 @@ alias du="du -h"
 alias df="df -h"
 alias su="su -l"
 alias ga="for f in `ls -1`\n do\n echo $f\n done"
+if [ -f /etc/lsb-release ]
+then
+  alias gvim="gvim > /dev/null 2>&1"
+fi
 
 ##=================================================================
 ## rbenvの設定
