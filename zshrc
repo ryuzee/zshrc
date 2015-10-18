@@ -4,11 +4,39 @@
 export LANG=ja_JP.UTF-8
 
 ##=================================================================
+## 必要なパッケージの導入
+##=================================================================
+if [ -f /etc/lsb-release ]
+then
+  if command -v go > /dev/null; then
+    export GOPATH=/usr/share/go
+    export PATH=$PATH:$GOPATH
+  else
+    echo "== Please install Go command =="
+    echo "sudo add-apt-repository ppa:evarlast/golang1.4"
+    echo "sudo apt-get update"
+    echo "sudo apt-get install golang"
+  fi
+
+  if command -v peco > /dev/null; then
+    ;
+  else
+    wget https://github.com/peco/peco/releases/download/v0.3.4/peco_linux_amd64.tar.gz -O /tmp/peco.tar.gz
+    tar xvfz /tmp/peco.tar.gz
+    sudo -E mv /tmp/peco_linux_amd64/peco /usr/local/bin/
+    sudo -E chmod 755 /usr/local/bin/peco
+    rm -rf /tmp/peco_linux_amd64
+  fi
+fi
+
+##=================================================================
 ## oh-my-zshの設定
 ##=================================================================
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
-plugins=(git)
+#ZSH_THEME="muse"
+#plugins=(git)
+plugins=(git ruby osx bundler brew rails emoji-clock)
 
 if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
@@ -72,6 +100,25 @@ GREP_OPTIONS="--exclude-dir=.deps $GREP_OPTIONS"
 GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
 ### 可能なら色を付ける。
 GREP_OPTIONS="--color=auto $GREP_OPTIONS"
+
+##=================================================================
+## pecoを使ってコマンド履歴をいい感じに選択する
+##=================================================================
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
 
 ##=================================================================
 ## 最後にもし自分専用のファイルがあればそいつを読み込む
