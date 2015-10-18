@@ -31,7 +31,7 @@ then
   fi
 fi
 
-if test `/usr/bin/sw_vers | head -1 | awk '{print $2}' 2>&1` = "Mac"
+if [ -f /usr/bin/sw_vers ]
 then
   if command -v go > /dev/null; then
     export GOROOT=/usr/local/opt/go/libexec
