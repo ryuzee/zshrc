@@ -6,6 +6,8 @@ export LANG=ja_JP.UTF-8
 ##=================================================================
 ## 必要なパッケージの導入
 ##=================================================================
+PECO_VERSION="0.3.4"
+
 if [ -f /etc/lsb-release ]
 then
   if command -v go > /dev/null; then
@@ -21,11 +23,33 @@ then
   if command -v peco > /dev/null; then
     ;
   else
-    wget https://github.com/peco/peco/releases/download/v0.3.4/peco_linux_amd64.tar.gz -O /tmp/peco.tar.gz
+    wget https://github.com/peco/peco/releases/download/v${PECO_VERSION}/peco_linux_amd64.tar.gz -O /tmp/peco.tar.gz
     tar xvfz /tmp/peco.tar.gz
     sudo -E mv /tmp/peco_linux_amd64/peco /usr/local/bin/
     sudo -E chmod 755 /usr/local/bin/peco
     rm -rf /tmp/peco_linux_amd64
+  fi
+fi
+
+if test `/usr/bin/sw_vers | head -1 | awk '{print $2}' 2>&1` = "Mac"
+then
+  if command -v go > /dev/null; then
+    export GOROOT=/usr/local/opt/go/libexec
+    export GOPATH=/opt/go
+  else
+    echo "== Please install Go command =="
+    echo "brew install go"
+    sudo -E mkdir -p /opt/go
+  fi
+
+  if command -v peco > /dev/null; then
+    ;
+  else
+    wget https://github.com/peco/peco/releases/download/v${PECO_VERSION}/peco_darwin_amd64.zip -O /tmp/peco.zip
+    unzip /tmp/peco.zip
+    sudo -E mv /tmp/peco_darwin_amd64/peco /usr/local/bin/
+    sudo -E chmod 755 /usr/local/bin/peco
+    rm -rf /tmp/peco_darwin_amd64
   fi
 fi
 
