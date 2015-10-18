@@ -4,13 +4,17 @@
 export LANG=ja_JP.UTF-8
 
 ##=================================================================
-## もしoh-my-zshがあればそいつを読み込む
+## oh-my-zshの設定
 ##=================================================================
-if [ ! -f ~/.oh-my-zsh/templates/zshrc.zsh-template ]
+export ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="robbyrussell"
+plugins=(git)
+
+if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
-source ~/.oh-my-zsh/templates/zshrc.zsh-template
+source $ZSH/oh-my-zsh.sh
 
 ##=================================================================
 ## コマンド履歴の設定
