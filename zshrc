@@ -6,7 +6,11 @@ export LANG=ja_JP.UTF-8
 ##=================================================================
 ## もしoh-my-zshがあればそいつを読み込む
 ##=================================================================
-[ -f ~/.oh-my-zsh/templates/zshrc.zsh-template ] && source ~/.oh-my-zsh/templates/zshrc.zsh-template
+if [ ! -f ~/.oh-my-zsh/templates/zshrc.zsh-template ]
+then
+  git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+fi
+source ~/.oh-my-zsh/templates/zshrc.zsh-template
 
 ##=================================================================
 ## コマンド履歴の設定
