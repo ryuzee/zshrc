@@ -40,6 +40,7 @@ then
     echo "== Please install Go command =="
     echo "brew install go"
     sudo -E mkdir -p /opt/go
+    brew install go
   fi
 
   if command -v peco > /dev/null; then
@@ -47,7 +48,7 @@ then
   else
     wget https://github.com/peco/peco/releases/download/v${PECO_VERSION}/peco_darwin_amd64.zip -O /tmp/peco.zip
     unzip /tmp/peco.zip
-    sudo -E mv /tmp/peco_darwin_amd64/peco /usr/local/bin/
+    sudo -E mv /tmp/peco_darwin_amd64/peco /usr/local/bin/peco
     sudo -E chmod 755 /usr/local/bin/peco
     rm -rf /tmp/peco_darwin_amd64
   fi
