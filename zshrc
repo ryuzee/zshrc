@@ -1,10 +1,13 @@
-##=================================================================
-## 言語の設定
-##=================================================================
 export LANG=ja_JP.UTF-8
+export EDITOR=vim
+# Ruby
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+# Node
+export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 ##=================================================================
-## 必要なパッケージの導入
+## Required Packages
 ##=================================================================
 PECO_VERSION="0.3.4"
 
@@ -54,28 +57,26 @@ then
   fi
 fi
 
-if [ -f ~/.oh-my-zsh/custom/plugins/zsh-completions/README.md ]; then
-  ;
-else
-  git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
-fi
-
 ##=================================================================
-## oh-my-zshの設定
+## oh-my-zsh
 ##=================================================================
 export ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="steeef"
 plugins=(git ruby osx bundler brew rails emoji-clock common-aliases zsh-completions)
 
 if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
+if [ ! -f ~/.oh-my-zsh/custom/plugins/zsh-completions/README.md ]; then
+  git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+fi
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 
 ##=================================================================
-## コマンド履歴の設定
+## History
 ##=================================================================
 setopt share_history
 HISTFILE=~/.zsh_history
@@ -83,7 +84,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 ##=================================================================
-## cdで移動したらlsする
+## Move
 ##=================================================================
 function chpwd() { ls -F }
 
@@ -100,37 +101,19 @@ then
 fi
 
 ##=================================================================
-## rbenvの設定
+## Grep Options
 ##=================================================================
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-
-##=================================================================
-## nodebrewの設定
-##=================================================================
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-##=================================================================
-## grepの設定
-##=================================================================
-## デフォルトオプションの設定
-## export GREP_OPTIONS
-### バイナリファイルにはマッチさせない。
 GREP_OPTIONS="--binary-files=without-match"
-### grep対象としてディレクトリを指定したらディレクトリ内を再帰的にgrepする。
 GREP_OPTIONS="--directories=recurse $GREP_OPTIONS"
-### 拡張子が.tmpのファイルは無視する。
 GREP_OPTIONS="--exclude=\*.tmp $GREP_OPTIONS"
-## 管理用ディレクトリを無視する。
 GREP_OPTIONS="--exclude-dir=.svn $GREP_OPTIONS"
 GREP_OPTIONS="--exclude-dir=.git $GREP_OPTIONS"
 GREP_OPTIONS="--exclude-dir=.deps $GREP_OPTIONS"
 GREP_OPTIONS="--exclude-dir=.libs $GREP_OPTIONS"
-### 可能なら色を付ける。
 GREP_OPTIONS="--color=auto $GREP_OPTIONS"
 
 ##=================================================================
-## pecoを使ってコマンド履歴をいい感じに選択する
+## peco settings
 ##=================================================================
 function peco-select-history() {
     local tac
@@ -168,11 +151,11 @@ bindkey '^x' peco-select-history
 # fi
 
 ##=================================================================
-## 最後にもし自分専用のファイルがあればそいつを読み込む
+## source other scripts
 ##=================================================================
+# AWS CLI
+[ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+# Personal Settings
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
-
-##=================================================================
-## Travisのファイルがあればそいつを読み込む
-##=================================================================
+# Travis Settings
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
