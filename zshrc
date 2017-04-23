@@ -54,24 +54,30 @@ then
   fi
 fi
 
+if [ -f ~/.oh-my-zsh/custom/plugins/zsh-completions/README.md ]; then
+  ;
+else
+  git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+fi
+
 ##=================================================================
 ## oh-my-zshの設定
 ##=================================================================
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
-#ZSH_THEME="muse"
-#plugins=(git)
-plugins=(git ruby osx bundler brew rails emoji-clock)
+plugins=(git ruby osx bundler brew rails emoji-clock common-aliases zsh-completions)
 
 if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 source $ZSH/oh-my-zsh.sh
+autoload -U compinit && compinit
 
 ##=================================================================
 ## コマンド履歴の設定
 ##=================================================================
+setopt share_history
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
@@ -84,9 +90,6 @@ function chpwd() { ls -F }
 ##=================================================================
 ## my alias
 ##=================================================================
-alias la="ls -a"
-alias lf="ls -F"
-alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
@@ -111,7 +114,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 ## grepの設定
 ##=================================================================
 ## デフォルトオプションの設定
-export GREP_OPTIONS
+## export GREP_OPTIONS
 ### バイナリファイルにはマッチさせない。
 GREP_OPTIONS="--binary-files=without-match"
 ### grep対象としてディレクトリを指定したらディレクトリ内を再帰的にgrepする。
@@ -144,6 +147,25 @@ function peco-select-history() {
 }
 zle -N peco-select-history
 bindkey '^r' peco-select-history
+bindkey '^x' peco-select-history
+
+##=================================================================
+## tmux
+##=================================================================
+# if [ -z "$TMUX" -a -z "$STY" ]; then
+    # if type tmuxx >/dev/null 2>&1; then
+        # tmuxx
+    # elif type tmux >/dev/null 2>&1; then
+        # if tmux has-session && tmux list-sessions | egrep -q '.*]$'; then
+            # # デタッチ済みセッションが存在する
+            # tmux attach && echo "tmux attached session "
+        # else
+            # tmux new-session && echo "tmux created new session"
+        # fi
+    # elif type screen >/dev/null 2>&1; then
+        # screen -rx || screen -D -RR
+    # fi
+# fi
 
 ##=================================================================
 ## 最後にもし自分専用のファイルがあればそいつを読み込む
