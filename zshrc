@@ -24,7 +24,7 @@ then
     ;
   else
     wget https://github.com/peco/peco/releases/download/v${PECO_VERSION}/peco_linux_amd64.tar.gz -O /tmp/peco.tar.gz
-    tar xvfz /tmp/peco.tar.gz
+    tar xvfz /tmp/peco.tar.gz -C /tmp
     sudo -E mv /tmp/peco_linux_amd64/peco /usr/local/bin/
     sudo -E chmod 755 /usr/local/bin/peco
     rm -rf /tmp/peco_linux_amd64
