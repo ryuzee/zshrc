@@ -57,13 +57,20 @@ then
   fi
 fi
 
+#if [ ! -f ~/.oh-my-zsh/themes/bullet-train.zsh-theme ]
+#then
+#  wget http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme -O ~/.oh-my-zsh/themes/bullet-train.zsh-theme
+#  wget https://github.com/powerline/fonts/raw/master/LiberationMono/Literation%20Mono%20Powerline.ttf -O ~/.oh-my-zsh/themes/Literation_Mono_Powerline.ttf
+#fi
+
 ##=================================================================
 ## oh-my-zsh
 ##=================================================================
 export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
+#ZSH_THEME="bullet-train"
 ZSH_THEME="steeef"
-plugins=(git ruby osx bundler brew rails emoji-clock common-aliases zsh-completions)
+plugins=(git ruby osx bundler brew rails emoji-clock common-aliases zsh-completions vi-mode)
 
 if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
