@@ -6,6 +6,9 @@ eval "$(rbenv init -)"
 # Node
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+# Show execution time
+REPORTTIME=3
+
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^ee' edit-command-line
@@ -105,7 +108,7 @@ function chpwd() { ls -F }
 alias du="du -h"
 alias df="df -h"
 alias su="su -l"
-alias ga="for f in `ls -1`\n do\n echo $f\n done"
+
 if [ -f /etc/lsb-release ]
 then
   alias gvim="gvim > /dev/null 2>&1"
