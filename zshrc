@@ -1,18 +1,3 @@
-export LANG=ja_JP.UTF-8
-export EDITOR=vim
-# Ruby
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-# Node
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-
-# Show execution time
-REPORTTIME=3
-
-autoload -Uz edit-command-line
-zle -N edit-command-line
-bindkey '^ee' edit-command-line
-
 ##=================================================================
 ## Required Packages
 ##=================================================================
@@ -64,11 +49,35 @@ then
   fi
 fi
 
-#if [ ! -f ~/.oh-my-zsh/themes/bullet-train.zsh-theme ]
-#then
-#  wget http://raw.github.com/caiogondim/bullet-train-oh-my-zsh-theme/master/bullet-train.zsh-theme -O ~/.oh-my-zsh/themes/bullet-train.zsh-theme
-#  wget https://github.com/powerline/fonts/raw/master/LiberationMono/Literation%20Mono%20Powerline.ttf -O ~/.oh-my-zsh/themes/Literation_Mono_Powerline.ttf
-#fi
+if [ ! -f ~/.oh-my-zsh/plugins/cd-gitroot/cd-gitroot ]
+then
+  git clone https://github.com/mollifier/cd-gitroot.git ~/.oh-my-zsh/plugins/cd-gitroot
+fi
+
+##=================================================================
+## Enable Plugins
+##=================================================================
+fpath=($HOME/.oh-my-zsh/plugins/cd-gitroot(N-/) $fpath)
+autoload -Uz cd-gitroot
+alias cdr='cd-gitroot'
+
+##=================================================================
+## Initialization
+##=================================================================
+export LANG=ja_JP.UTF-8
+export EDITOR=vim
+# Ruby
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+# Node
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# Show execution time
+REPORTTIME=3
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^ee' edit-command-line
 
 ##=================================================================
 ## oh-my-zsh
