@@ -86,7 +86,7 @@ export ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="bullet-train"
 ZSH_THEME="steeef"
-plugins=(git ruby osx bundler brew rails emoji-clock common-aliases zsh-completions vi-mode)
+plugins=(git ruby osx bundler brew rails emoji-clock common-aliases docker docker-compose zsh-completions vi-mode)
 
 if [ ! -f $ZSH/oh-my-zsh.sh ]
 then
