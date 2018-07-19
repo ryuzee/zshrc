@@ -28,6 +28,18 @@ fi
 
 if [ -f /usr/bin/sw_vers ]
 then
+  if command -v wget > /dev/null; then
+    ;
+  else
+    brew install wget
+  fi
+
+  if command -v rbenv > /dev/null; then
+    ;
+  else
+    brew install rbenv ruby-build
+  fi
+
   if command -v go > /dev/null; then
     export GOROOT=/usr/local/opt/go/libexec
     export GOPATH=/opt/go
@@ -42,6 +54,7 @@ then
     ;
   else
     wget https://github.com/peco/peco/releases/download/v${PECO_VERSION}/peco_darwin_amd64.zip -O /tmp/peco.zip
+    cd /tmp
     unzip /tmp/peco.zip
     sudo -E mv /tmp/peco_darwin_amd64/peco /usr/local/bin/peco
     sudo -E chmod 755 /usr/local/bin/peco
@@ -49,9 +62,16 @@ then
   fi
 fi
 
-if [ ! -f ~/.oh-my-zsh/plugins/cd-gitroot/cd-gitroot ]
-then
-  git clone https://github.com/mollifier/cd-gitroot.git ~/.oh-my-zsh/plugins/cd-gitroot
+# Node
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+if command -v nodebrew > /dev/null; then
+  ;
+else
+  curl -L git.io/nodebrew | perl - setup
+  echo "== Please install nodejs by doing follows =="
+  echo "nodebrew ls-all"
+  echo "nodebrew install-binary xxxx"
+  echo "nodebrew use xxxx"
 fi
 
 ##=================================================================
@@ -69,8 +89,7 @@ export EDITOR=vim
 # Ruby
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
-# Node
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+
 
 # Show execution time
 REPORTTIME=3
@@ -95,6 +114,12 @@ fi
 if [ ! -f ~/.oh-my-zsh/custom/plugins/zsh-completions/README.md ]; then
   git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
 fi
+
+if [ ! -f ~/.oh-my-zsh/plugins/cd-gitroot/cd-gitroot ]
+then
+  git clone https://github.com/mollifier/cd-gitroot.git ~/.oh-my-zsh/plugins/cd-gitroot
+fi
+
 source $ZSH/oh-my-zsh.sh
 autoload -U compinit && compinit
 
