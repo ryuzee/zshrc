@@ -74,6 +74,18 @@ else
   echo "nodebrew use xxxx"
 fi
 
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
+if command -v pyenv > /dev/null; then
+  ;
+else
+  git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+  echo "== Please install pyenv by doing follows =="
+  echo "pyenv install 3.4.3"
+  echo "pyenv local/global 3.4.3"
+fi
+eval "$(pyenv init -)"
+
 ##=================================================================
 ## Enable Plugins
 ##=================================================================
@@ -86,10 +98,10 @@ alias cdr='cd-gitroot'
 ##=================================================================
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
+
 # Ruby
 export PATH=$HOME/.rbenv/bin:$PATH
 eval "$(rbenv init -)"
-
 
 # Show execution time
 REPORTTIME=3
