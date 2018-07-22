@@ -60,6 +60,14 @@ then
     sudo -E chmod 755 /usr/local/bin/peco
     rm -rf /tmp/peco_darwin_amd64
   fi
+
+  if [ ! -f /usr/local/bin/ctags ]; then
+    brew install ctags
+  fi
+
+  if [ ! -f /usr/local/bin/rsync ]; then
+    brew install rsync
+  fi
 fi
 
 # Node
