@@ -236,5 +236,3 @@ bindkey '^x' peco-select-history
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 # Personal Settings
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
-# Travis Settings
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
